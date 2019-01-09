@@ -6,7 +6,11 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'dist')));
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/google5c312c1e71dfe439.html'));
+    console.log({
+        status: 200,
+        data: 'ok'
+    });
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 const port = process.env.PORT || 3000;
