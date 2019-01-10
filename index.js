@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/tigger', (req, res) => {
+    console.log('trigger!');
     res.json({
         success: true,
         data: 'trigger!'
