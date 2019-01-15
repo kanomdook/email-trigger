@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
-const path = require('path');
+var _gmail = require('./gmail.js');
+// const path = require('path');
 
 const app = express();
 
@@ -23,10 +24,8 @@ app.get('/', (req, res) => {
 
 app.post('/api/tigger', (req, res) => {
     console.log('trigger!');
-    res.json({
-        success: true,
-        data: 'trigger!'
-    });
+    _gmail.run();
+    res.json();
 });
 
 const port = process.env.PORT || 3000;

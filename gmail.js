@@ -1,6 +1,7 @@
 var fs = require('fs');
 var readline = require('readline');
 var { google } = require('googleapis');
+var request = require('request');
 var currentPath = process.cwd();
 
 // If modifying these scopes, delete your previously saved credentials
@@ -9,7 +10,7 @@ var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 
 // Change token directory to your system preference
 var TOKEN_DIR = (currentPath);
-var TOKEN_PATH = TOKEN_DIR + '/gmail-nodejs.json';
+var TOKEN_PATH = TOKEN_DIR + '/access_token.json';
 console.log('===========TOKEN_PATH============');
 console.log(TOKEN_PATH);
 console.log('=================================');
@@ -17,16 +18,18 @@ console.log('=================================');
 var gmail = google.gmail('v1');
 
 // Load client secrets from a local file.
-fs.readFile('client_secret.json', function processClientSecrets(err, content) {
-    if (err) {
-        console.log('Error loading client secret file: ' + err);
-        return;
-    }
-    // Authorize a client with the loaded credentials, then call the
-    // Gmail API.
-    // fn. examplae => listLabels, getRecentEmail
-    authorize(JSON.parse(content), getRecentEmail);
-});
+exports.run = function () {
+    fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+        if (err) {
+            console.log('Error loading client secret file: ' + err);
+            return;
+        }
+        // Authorize a client with the loaded credentials, then call the
+        // Gmail API.
+        // fn. examplae => listLabels, getRecentEmail
+        authorize(JSON.parse(content), getRecentEmail);
+    });
+};
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
@@ -164,8 +167,32 @@ function getRecentEmail(auth) {
             var buff = new Buffer(data, 'base64');
             var text = buff.toString();
             console.log(text);
-
+            sendNoti(text);
             // console.log(response['data']);
         });
+    });
+}
+
+function sendNoti(text) {
+    let token = 'qJBQ8pnZwD0Ss7kUne9GmRFlp1X6crLvoY8TwxQroQr';
+    let message = text;
+    request({
+        method: 'POST',
+        uri: 'https://notify-api.line.me/api/notify',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+            'bearer': token
+        },
+        form: {
+            message: message
+        }
+    }, (err, httpResponse, body) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('success');
+        }
     });
 }
