@@ -1,14 +1,18 @@
 var fs = require('fs');
 var readline = require('readline');
 var { google } = require('googleapis');
+var currentPath = process.cwd();
 
 // If modifying these scopes, delete your previously saved credentials
 // at TOKEN_DIR/gmail-nodejs.json
 var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 
 // Change token directory to your system preference
-var TOKEN_DIR = ('E:/localhost/nodejs/credentials/');
-var TOKEN_PATH = TOKEN_DIR + 'gmail-nodejs.json';
+var TOKEN_DIR = (currentPath);
+var TOKEN_PATH = TOKEN_DIR + '/gmail-nodejs.json';
+console.log('===========TOKEN_PATH============');
+console.log(TOKEN_PATH);
+console.log('=================================');
 
 var gmail = google.gmail('v1');
 
@@ -31,9 +35,9 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
  * @param {function} callback The callback to call with the authorized client.
  */
 function authorize(credentials, callback) {
-    var clientSecret = credentials.installed.client_secret;
-    var clientId = credentials.installed.client_id;
-    var redirectUrl = credentials.installed.redirect_uris[0];
+    var clientSecret = credentials.web.client_secret;
+    var clientId = credentials.web.client_id;
+    var redirectUrl = credentials.web.redirect_uris[0];
 
     var OAuth2 = google.auth.OAuth2;
 
@@ -93,6 +97,9 @@ function storeToken(token) {
             throw err;
         }
     }
+    console.log('++++++++++++++++++++Token+++++++++++++');
+    console.log(token);
+    console.log('++++++++++++++++++++++++++++++++++++++');
     fs.writeFile(TOKEN_PATH, JSON.stringify(token));
     console.log('Token stored to ' + TOKEN_PATH);
 }
