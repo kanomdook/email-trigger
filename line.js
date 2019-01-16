@@ -1,6 +1,9 @@
 const request = require('request');
 
 exports.getToken = function (params) {
+    console.log('======params======');
+    console.log(params);
+    console.log('==================');
     return new Promise((resove, reject) => {
         request({
             har: {
@@ -42,6 +45,9 @@ exports.getToken = function (params) {
             if (err) {
                 reject(err);
             } else {
+                console.log('======body======');
+                console.log(body);
+                console.log('==================');
                 let token = body.access_token ? body.access_token : '';
                 resove(token);
             }
