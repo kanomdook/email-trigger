@@ -1,6 +1,9 @@
 const request = require('request');
 
-exports.getToken = function (params) {
+exports.getToken = function (data) {
+    console.log('========data==========');
+    console.log(data);
+    console.log('=====================');
     return new Promise((resove, reject) => {
         request({
             har: {
@@ -21,7 +24,7 @@ exports.getToken = function (params) {
                         },
                         {
                             name: 'code',
-                            value: params ? params.code : ''
+                            value: data ? data.code : ''
                         },
                         {
                             name: 'redirect_uri',
