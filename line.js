@@ -1,9 +1,6 @@
 const request = require('request');
 
 exports.getToken = function (params) {
-    console.log('======params======');
-    console.log(params);
-    console.log('==================');
     return new Promise((resove, reject) => {
         request({
             har: {

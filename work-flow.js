@@ -1,5 +1,8 @@
 const line = require('./line.js');
 module.exports = function (req, res) {
+    console.log('========req==========');
+    console.log(req);
+    console.log('=====================');
     run(req.body, res);
 }
 
