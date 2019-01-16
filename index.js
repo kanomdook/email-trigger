@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/line', (req, res) => {
     _gmail.send({
-        code: 'kaew'
+        code: 'code'
     });
     res.json();
 });
@@ -32,9 +32,7 @@ app.get('/api/line', (req, res) => {
 app.post('/api/tigger', (req, res) => {
     console.log('trigger!');
     // _gmail.run();
-    _gmail.send({
-        code: 'kaew'
-    });
+    _gmail.send(req.body);
     res.json();
 });
 

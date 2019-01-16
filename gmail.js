@@ -35,7 +35,7 @@ exports.send = function (params) {
     console.log('===============params===========');
     console.log(params);
     console.log('================================');
-    sendNoti('ทดสอบ get token');
+    sendNoti(params, 'ทดสอบ get token');
 };
 
 /**
@@ -180,7 +180,7 @@ function getRecentEmail(auth) {
     });
 }
 
-function sendNoti(txt) {
+function sendNoti(params, txt) {
     request({
         har: {
             url: 'https://notify-bot.line.me/oauth/token',
@@ -200,7 +200,7 @@ function sendNoti(txt) {
                     },
                     {
                         name: 'code',
-                        value: '3U8NpblhnTPGJ62vl2OIFw'
+                        value: params.code
                     },
                     {
                         name: 'redirect_uri',
