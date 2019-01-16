@@ -8,9 +8,13 @@ async function run(params, res) {
         const token = await line.getToken(params);
         if (token) {
             const lineRes = await line.sendNotification(token, 'ทดสอบ Line Notification');
-            if (lineRes.status === 200) {
+            console.log('========lineRes======');
+            console.log(lineRes);
+            console.log('=====================');
+            if (lineRes.status == 200) {
                 res.json({
-                    success: true
+                    success: true,
+                    msg: 'notification is sended!'
                 });
             } else {
                 res.json(lineRes);
