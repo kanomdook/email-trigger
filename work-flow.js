@@ -11,7 +11,7 @@ async function run(params, res) {
             console.log('========lineRes======');
             console.log(lineRes);
             console.log('=====================');
-            if (lineRes.status == 200) {
+            if (lineRes.status === 200) {
                 res.json({
                     success: true,
                     msg: 'notification is sended!'
