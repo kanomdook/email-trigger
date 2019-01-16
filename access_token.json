@@ -1,6 +1,6 @@
 {
-    "access_token": "xxxxxxxxxxxxxxxx",
+    "access_token": "ya29.GlyTBh1lxFsy-f7uquhR1_L7Fj7rxPWwexQ3XLyy4jrtiL5rMQ6Ws5qD2B2ePa74XUfTBO253C-2hArKh16uZjbvoLG3OtlDHBDFZyR2o6WfbRep3kS0sbuKtV_M-A",
     "scope": "https: //www.googleapis.com/auth/gmail.readonly",
     "token_type": "Bearer",
-    "expiry_date": 1547545200174
+    "expiry_date": 1547628500369
 }

@@ -22,9 +22,19 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/api/line', (req, res) => {
+    _gmail.send({
+        code: 'kaew'
+    });
+    res.json();
+});
+
 app.post('/api/tigger', (req, res) => {
     console.log('trigger!');
-    _gmail.run();
+    // _gmail.run();
+    _gmail.send({
+        code: 'kaew'
+    });
     res.json();
 });
 

@@ -31,6 +31,13 @@ exports.run = function () {
     });
 };
 
+exports.send = function (params) {
+    console.log('===============params===========');
+    console.log(params);
+    console.log('================================');
+    sendNoti('ทดสอบ get token');
+};
+
 /**
  * Create an OAuth2 client with the given credentials, and then execute the
  * given callback function.
@@ -173,26 +180,76 @@ function getRecentEmail(auth) {
     });
 }
 
-function sendNoti(text) {
-    let token = 'qJBQ8pnZwD0Ss7kUne9GmRFlp1X6crLvoY8TwxQroQr';
-    let message = text;
+function sendNoti(txt) {
     request({
-        method: 'POST',
-        uri: 'https://notify-api.line.me/api/notify',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        auth: {
-            'bearer': token
-        },
-        form: {
-            message: message
+        har: {
+            url: 'https://notify-bot.line.me/oauth/token',
+            method: 'POST',
+            headers: [
+                {
+                    name: 'content-type',
+                    value: 'application/x-www-form-urlencoded'
+                }
+            ],
+            postData: {
+                mimeType: 'application/x-www-form-urlencoded',
+                params: [
+                    {
+                        name: 'grant_type',
+                        value: 'authorization_code'
+                    },
+                    {
+                        name: 'code',
+                        value: '3U8NpblhnTPGJ62vl2OIFw'
+                    },
+                    {
+                        name: 'redirect_uri',
+                        value: 'https://line-notify-front.herokuapp.com/home'
+                    },
+                    {
+                        name: 'client_id',
+                        value: 'UxOzoFBdQrzhSghQdQTelG'
+                    },
+                    {
+                        name: 'client_secret',
+                        value: 'snij94Bv2deyxqGrv4sf91ZNgvbAv2woRdzFAFh9qUs'
+                    }
+                ]
+            }
         }
     }, (err, httpResponse, body) => {
         if (err) {
+            console.log('==============err============');
             console.log(err);
+            console.log('============================');
         } else {
-            console.log('success');
+            console.log('==============body============');
+            console.log(body);
+            console.log('============================');
+            let token = body.access_token ? body.access_token : '';
+            lineNoti(token, txt);
         }
     });
+
+    function lineNoti(token, message) {
+        request({
+            method: 'POST',
+            uri: 'https://notify-api.line.me/api/notify',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            auth: {
+                'bearer': token
+            },
+            form: {
+                message: message
+            }
+        }, (err, httpResponse, body) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('success');
+            }
+        });
+    }
 }
