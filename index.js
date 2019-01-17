@@ -25,20 +25,26 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/tigger', (req, res) => {
-     // ****** for run prod ********
-
-    const gr = new gmail();
-    gr.then(detail => {
-        new work(req, res, detail);
-    }).catch(err => {
+    // ****** for run prod ********
+    if (req.body.code) {
+        const gr = new gmail();
+        gr.then(detail => {
+            new work(req, res, detail);
+        }).catch(err => {
+            res.json({
+                success: false,
+                msg: 'can not get gmail ! : ' + err
+            });
+        });
+    } else {
         res.json({
             success: false,
-            msg: 'can not get gmail ! : ' + err
+            msg: 'no code!'
         });
-    });
+    }
 
     // ****** for get access_token ********
-    
+
     // _gmail.run();
 });
 
