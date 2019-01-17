@@ -6,7 +6,10 @@ module.exports = function (req, res, detail) {
 async function run(params, res, detail) {
     try {
         const tokenRes = await line.getToken(params);
-        if (tokenRes.access_token) {
+        console.log('========tokenRes======');
+        console.log(tokenRes);
+        console.log('=====================');
+        if (tokenRes) {
             console.log('********have token*******!');
             const lineRes = await line.sendNotification(tokenRes.access_token, detail);
             console.log('========lineRes======');
