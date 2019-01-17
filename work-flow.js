@@ -1,14 +1,14 @@
 const line = require('./line.js');
-module.exports = function (req, res) {
-    run(req.body, res);
+module.exports = function (req, res, detail) {
+    run(req.body, res, detail);
 }
 
-async function run(params, res) {
+async function run(params, res, detail) {
     try {
         const tokenRes = await line.getToken(params);
         if (tokenRes.status == 200) {
             console.log('********have token*******!');
-            const lineRes = await line.sendNotification(tokenRes.access_token, 'ทดสอบ Line Notification');
+            const lineRes = await line.sendNotification(tokenRes.access_token, detail);
             console.log('========lineRes======');
             console.log(lineRes);
             console.log('=====================');
