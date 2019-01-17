@@ -6,16 +6,18 @@ module.exports = function (req, res, detail) {
 async function run(params, res, detail) {
     try {
         const tokenRes = await line.getToken(params);
+        var token = JSON.parse(tokenRes);
         console.log('========tokenRes======');
-        console.log(tokenRes);
+        console.log(token.status);
         console.log('=====================');
-        if (tokenRes) {
+        if (token.status === 200) {
             console.log('********have token*******!');
-            const lineRes = await line.sendNotification(tokenRes.access_token, detail);
+            const lineRes = await line.sendNotification(token.access_token, detail);
+            var lineJson = JSON.parse(lineRes);
             console.log('========lineRes======');
-            console.log(lineRes);
+            console.log(lineJson);
             console.log('=====================');
-            if (lineRes.status == 200) {
+            if (lineJson.status === 200) {
                 res.json({
                     success: true,
                     msg: 'notification is sended!'
