@@ -45,11 +45,10 @@ exports.getToken = function (data) {
             if (err) {
                 reject(err);
             } else {
-                console.log('======body======');
+                console.log('======body========');
                 console.log(body);
                 console.log('==================');
-                let token = body.access_token ? body.access_token : '';
-                resove(token);
+                resove(body);
             }
         });
     });

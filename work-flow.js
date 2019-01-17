@@ -8,9 +8,9 @@ module.exports = function (req, res) {
 
 async function run(params, res) {
     try {
-        const token = await line.getToken(params);
-        if (token) {
-            const lineRes = await line.sendNotification(token, 'ทดสอบ Line Notification');
+        const tokenRes = await line.getToken(params);
+        if (tokenRes.status === 200) {
+            const lineRes = await line.sendNotification(tokenRes.access_token, 'ทดสอบ Line Notification');
             console.log('========lineRes======');
             console.log(lineRes);
             console.log('=====================');
