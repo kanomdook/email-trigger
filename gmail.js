@@ -1,44 +1,44 @@
 'use strict'
 var fs = require('fs');
-var readline = require('readline');
 var { google } = require('googleapis');
 var currentPath = process.cwd();
-
-var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 var TOKEN_DIR = (currentPath);
 var TOKEN_PATH = TOKEN_DIR + '/access_token.json';
-console.log('===========TOKEN_PATH============');
-console.log(TOKEN_PATH);
-console.log('=================================');
 
 var gmail = google.gmail('v1');
 
 module.exports = function () {
-    let res = run();
-    console.log(res);
+    return start();
 }
 
-async function run() {
-    fs.readFile('client_secret.json', async function processClientSecrets(err, content) {
-        if (err) {
-            console.log(err);
-        } else {
-            try {
-                const authRes = await gmailAuth(JSON.parse(content));
-                if (authRes) {
-                    const emailRes = await getLastEmail(authRes);
-                    if (emailRes) {
-                        return emailRes;
+async function start() {
+    const res = await run();
+    return res;
+}
+
+function run() {
+    return new Promise((resove, reject) => {
+        fs.readFile('client_secret.json', async function processClientSecrets(err, content) {
+            if (err) {
+                reject(err);
+            } else {
+                try {
+                    const authRes = await gmailAuth(JSON.parse(content));
+                    if (authRes) {
+                        const emailRes = await getLastEmail(authRes);
+                        if (emailRes) {
+                            resove(emailRes);
+                        } else {
+                            reject('can not get last email form gmail');
+                        }
                     } else {
-                        console.log('can not get last email form gmail');
+                        reject('gmail not Auth!');
                     }
-                } else {
-                    console.log('gmail not Auth!');
+                } catch (error) {
+                    throw error;
                 }
-            } catch (error) {
-                throw error;
             }
-        }
+        });
     });
 };
 

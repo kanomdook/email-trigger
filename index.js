@@ -25,8 +25,17 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/tigger', (req, res) => {
-    // new work(req, res);
-    new gmail();
+    const gr = new gmail();
+    gr.then(detail => {
+        new work(req, res, detail);
+    }).catch(err => {
+        res.json({
+            success: false,
+            msg: 'can not get gmail ! : ' + err
+        });
+    });
+
+    // ****** for get access_token ********
     // _gmail.run();
 });
 
