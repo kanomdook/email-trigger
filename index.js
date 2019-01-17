@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const work = require('./work-flow');
 const gmail = require('./gmail');
-// const _gmail = require('./_gmail');
+const _gmail = require('./_gmail');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -25,6 +25,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/tigger', (req, res) => {
+     // ****** for run prod ********
+
     const gr = new gmail();
     gr.then(detail => {
         new work(req, res, detail);
@@ -36,6 +38,7 @@ app.post('/api/tigger', (req, res) => {
     });
 
     // ****** for get access_token ********
+    
     // _gmail.run();
 });
 
