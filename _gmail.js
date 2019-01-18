@@ -3,6 +3,7 @@ var readline = require('readline');
 var { google } = require('googleapis');
 var request = require('request');
 var currentPath = process.cwd();
+var https = require('follow-redirects').https;
 
 // If modifying these scopes, delete your previously saved credentials
 // at TOKEN_DIR/gmail-nodejs.json
@@ -76,23 +77,38 @@ function authorize(credentials, callback) {
 function getNewToken(oauth2Client, callback) {
     var authUrl = oauth2Client.generateAuthUrl({ access_type: 'offline', scope: SCOPES });
     console.log('Authorize this app by visiting this url: ', authUrl);
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
 
-    rl.question('Enter the code from that page here: ', function (code) {
-        rl.close();
-        oauth2Client.getToken(code, function (err, token) {
-            if (err) {
-                console.log('Error while trying to retrieve access token', err);
-                return;
-            }
-            oauth2Client.credentials = token;
-            storeToken(token);
-            callback(oauth2Client);
-        });
-    });
+    // request({
+    //     method: 'POST',
+    //     uri: 'https://notify-api.line.me/api/notify',
+    //     headers: {
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    // }, (err, httpResponse, body) => {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         console.log(httpResponse.headers);
+    //     }
+    // });
+
+    // var rl = readline.createInterface({
+    //     input: process.stdin,
+    //     output: process.stdout
+    // });
+
+    // rl.question('Enter the code from that page here: ', function (code) {
+    //     rl.close();
+    //     oauth2Client.getToken(code, function (err, token) {
+    //         if (err) {
+    //             console.log('Error while trying to retrieve access token', err);
+    //             return;
+    //         }
+    //         oauth2Client.credentials = token;
+    //         storeToken(token);
+    //         callback(oauth2Client);
+    //     });
+    // });
 }
 
 /**
