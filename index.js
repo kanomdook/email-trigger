@@ -19,7 +19,11 @@ app.use(bodyParser.json());
 
 app.get('*', (req, res, next) => {
     console.log('==============HEADER========');
+    var furl = req.originalUrl;
+    var _spt = furl.split('code=');
+    var _spt2 = _spt[1].split('&');
     console.log(req.originalUrl);
+    console.log(_spt2[0]);
     console.log('============================');
     next();
 });
