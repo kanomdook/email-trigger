@@ -17,10 +17,14 @@ app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.get('*', (req, res, next) => {
     console.log('==============HEADER========');
     console.log(req.originalUrl);
     console.log('============================');
+    next();
+});
+
+app.get('/', (req, res) => {
     res.json({
         success: true,
         data: 'hello api'
