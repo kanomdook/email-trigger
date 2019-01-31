@@ -35,6 +35,13 @@ app.get('/', (req, res) => {
     });
 });
 
+app.post('/testpost', (req, res) => {
+    res.json({
+        success: true,
+        data: req.body
+    });
+});
+
 app.post('/api/tigger', (req, res) => {
     // ****** for run prod ********
     // if (req.body.code) {
